@@ -1,3 +1,132 @@
 tui_grid
 
 <html>
+<div id="grid">
+</div>
+</html>
+
+<javascript>
+
+
+const columnData = [
+	
+	        {
+	          header: '구분',
+	          name: 'typename',
+	       	  width: '100',
+	        },
+	        {
+	          header: '교과명(교과ID/코스웨어ID/사용여부)',
+	          name: 'cosID',
+	          width: '500',
+	          renderer:{
+	        	  type:ButtonCustomRender,
+	        	  options:{
+	        	  }
+	          }
+	        },
+	        {
+	          header: '신규/개편여부',
+	          name: 'newYN',
+	          width: '150',
+	          formatter:'listItemText',
+	          editor:{
+	        	  type:'checkbox',
+	        	  options:{
+	        		  listItems:[
+	        			  {text: 'Y',value:'1'},
+	        			  {text: 'N',value:'0'}
+	        		  ]
+	        	  }
+	          }
+	        },
+	        {
+	          header: '콘텐츠재생시간',
+	          name: 'runningtime',
+	          width: '150',
+	        },
+	        {
+	            header: '교과편성',
+	            name: 'cosSelect',
+	            width: '150',
+	            formatter:'listItemText',
+		          editor:{
+		        	  type:'select',
+		        	  options:{
+		        		  listItems:[
+		        			  {text: '기본소양',value:'1'},
+		        			  {text: '역량/전문',value:'2'},
+		        			  {text: '행정기타',value:'3'}
+		        		  ]
+		        	  }
+		          }
+	        },
+	        {
+	            header: '운영형태',
+	            name: 'runtype',
+	            width: '150',
+	            formatter:'listItemText',
+		          editor:{
+		        	  type:'checkbox',
+		        	  options:{
+		        		  listItems:[
+		        			  {text: '일반과목',value:'1'},
+		        			  {text: '선택과목',value:'2'},
+		        			  {text: '분반',value:'3'}
+		        		  ]
+		        	  }
+		          }
+	        },
+	        {
+	            header: '교육방법',
+	            name: 'methodtype',
+	            width: '150',
+	        },
+	        {
+	            header: '시수',
+	            name: 'classnum',
+	            width: '100',
+	            editor:{
+	            	type: CustomTextEditor,
+	            	options:{
+	            		maxLength: 10
+	            	}
+	            }
+	         
+	        },
+	        {
+	            header: '강사',
+	            name: 'lecturer',
+	            width: '300',
+	            renderer:{
+		        	  type:ButtonaddRender,
+		        	  options:{
+		        	  }
+		          }
+	        }
+    ];
+	
+    const grid = new tui.Grid({
+        el: document.getElementById('grid'),
+         data:{
+        	api:{
+        		readData:{ url: '/javaboard/readData.do', method:'GET'},
+        		updateData: {url:'/javaboard/updateData.do',method:'PUT'},
+        		deleteData: { url: '/javaboard/deleteData.do', method: 'POST' }
+        	},
+    		contentType: 'application/json'
+        },
+        scrollX: false,
+        scrollY: false,
+        rowHeaders:[
+        	{ type: 'checkbox' },
+        	{ type: 'rowNum' }
+        ],
+        draggable: true,
+        columns: columnData,
+        pageOptions:{
+        	perPage : 3
+        }
+      
+      });
+    
